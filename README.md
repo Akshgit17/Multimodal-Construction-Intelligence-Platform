@@ -109,7 +109,7 @@ AI_MODEL=gemini-3.5-flash-lite
 GEMINI_API_KEY=your_gemini_api_key_here
 PORT=8000
 ```
-*(You can also securely type your key directly into the application's sidebar at runtime).*
+*(API key is kept strictly private server-side and is never exposed in the UI).*
 
 #### Step 3: Launch Streamlit
 Double-click `run_streamlit.bat` or run:

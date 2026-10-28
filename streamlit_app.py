@@ -19,7 +19,7 @@ else:
 # Page Configuration & Modern Theme Styling
 # ---------------------------------------------------------
 st.set_page_config(
-    page_title="BuildIntel AI • Multimodal Construction Intelligence",
+    page_title="BuildIntel AI • Multimodal Construction Intelligence Platform",
     page_icon="🏗️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -567,25 +567,17 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# API Key Resolution
-default_key = ""
+# API Key Resolution - Strictly Server-Side (Never rendered, prefilled, or exposed in UI)
+api_key = ""
 try:
     if "GEMINI_API_KEY" in st.secrets:
-        default_key = st.secrets["GEMINI_API_KEY"]
+        api_key = str(st.secrets["GEMINI_API_KEY"]).strip()
 except Exception:
     pass
 
-if not default_key:
-    default_key = os.getenv("GEMINI_API_KEY", "")
+if not api_key:
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
 
-user_api_key = st.sidebar.text_input(
-    "Google Gemini API Key",
-    value=default_key,
-    type="password",
-    help="Enter your Gemini API key from https://aistudio.google.com/. Automatically detected from .env / Streamlit secrets."
-)
-
-api_key = user_api_key.strip()
 is_live_mode = bool(api_key and api_key != "your_gemini_api_key_here")
 
 if is_live_mode:
