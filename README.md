@@ -266,3 +266,9 @@ Multimodal-Construction-Intelligence-Platform/
 - **Generative AI:** Google Gemini Multimodal Flash REST API (`gemini-3.5-flash-lite`, `gemini-3.5-flash`, `gemini-flash-latest`)
 - **Architectural 3D Engine:** Pollinations AI Generative Vision API
 - **Codes & Standards:** OSHA 1926, IS 456:2000, IS 3696, NBC 2016, ACI 224R / 305R
+
+---
+
+## 👨‍💻 Contributor
+
+- **Akshat** ([@Akshgit17](https://github.com/Akshgit17))
