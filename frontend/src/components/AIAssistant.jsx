@@ -21,7 +21,7 @@ export default function AIAssistant({ healthInfo }) {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      summary: 'BuildIntel Engineering Advisory',
+      summary: 'Construction Intelligence Advisory',
       risk_level: 'Low',
       response: "Hello! I am your AI Construction Engineering Assistant. Ask me anything about OSHA / IS 456 codes, concrete curing protocols, structural inspection remedies, or adverse weather site safety protocols.",
       findings: [

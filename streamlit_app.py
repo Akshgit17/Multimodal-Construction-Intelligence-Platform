@@ -19,7 +19,7 @@ else:
 # Page Configuration & Modern Theme Styling
 # ---------------------------------------------------------
 st.set_page_config(
-    page_title="BuildIntel AI • Multimodal Construction Intelligence Platform",
+    page_title="Multimodal Construction Intelligence Platform",
     page_icon="🏗️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -561,8 +561,8 @@ st.sidebar.markdown("""
 <div style='display: flex; align-items: center; gap: 10px; margin-bottom: 15px;'>
     <div style='background: #f59e0b; padding: 8px; border-radius: 8px; font-size: 24px;'>🏗️</div>
     <div>
-        <h2 style='margin:0; font-size: 1.1rem; font-weight:800; color:#fff;'>BuildIntel AI</h2>
-        <p style='margin:0; font-size: 0.7rem; color:#9ca3af;'>Multimodal Construction Intelligence</p>
+        <h2 style='margin:0; font-size: 1.05rem; font-weight:800; color:#fff;'>Construction Intelligence</h2>
+        <p style='margin:0; font-size: 0.7rem; color:#9ca3af;'>Multimodal Platform</p>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1403,7 +1403,7 @@ with tab4:
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; font-size: 0.75rem; color: #64748b;'>
-    <strong>BuildIntel AI • Multimodal Construction Intelligence Platform</strong> • Skill Wallet Capstone Project 1<br/>
+    <strong>Multimodal Construction Intelligence Platform</strong> • Skill Wallet Capstone Project 1<br/>
     Built with Streamlit, Python, Google Gemini Multimodal AI, and Pollinations AI • 
     <em>All outputs are preliminary computerized assessments. Consult certified structural engineers for statutory approvals.</em>
 </div>
