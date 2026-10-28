@@ -6,14 +6,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
-from gemini_service import (
-    analyze_safety,
-    analyze_crack,
-    generate_project_plan,
-    get_assistant_advice,
-    has_api_key
-)
-from mock_data import PRELIMINARY_DISCLAIMER
+try:
+    from gemini_service import (
+        analyze_safety,
+        analyze_crack,
+        generate_project_plan,
+        get_assistant_advice,
+        has_api_key
+    )
+    from mock_data import PRELIMINARY_DISCLAIMER
+except ImportError:
+    from backend.gemini_service import (
+        analyze_safety,
+        analyze_crack,
+        generate_project_plan,
+        get_assistant_advice,
+        has_api_key
+    )
+    from backend.mock_data import PRELIMINARY_DISCLAIMER
 
 load_dotenv()
 

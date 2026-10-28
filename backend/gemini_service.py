@@ -4,15 +4,37 @@ import json
 import logging
 import requests
 from dotenv import load_dotenv
-from mock_data import (
-    PRELIMINARY_DISCLAIMER,
-    DEMO_SAFETY_ANALYSIS,
-    DEMO_CRACK_ANALYSIS,
-    generate_demo_project_plan,
-    generate_demo_assistant_response
-)
+try:
+    from mock_data import (
+        PRELIMINARY_DISCLAIMER,
+        DEMO_SAFETY_ANALYSIS,
+        DEMO_CRACK_ANALYSIS,
+        generate_dynamic_safety_analysis,
+        generate_dynamic_crack_analysis,
+        generate_demo_project_plan,
+        generate_demo_assistant_response
+    )
+except ImportError:
+    from backend.mock_data import (
+        PRELIMINARY_DISCLAIMER,
+        DEMO_SAFETY_ANALYSIS,
+        DEMO_CRACK_ANALYSIS,
+        generate_dynamic_safety_analysis,
+        generate_dynamic_crack_analysis,
+        generate_demo_project_plan,
+        generate_demo_assistant_response
+    )
 
-load_dotenv()
+# Load environment from project root .env or local .env
+_env_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+_env_local = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+if os.path.exists(_env_root):
+    load_dotenv(dotenv_path=_env_root, override=True)
+elif os.path.exists(_env_local):
+    load_dotenv(dotenv_path=_env_local, override=True)
+else:
+    load_dotenv(override=True)
+
 logger = logging.getLogger("construction_platform.gemini")
 
 def get_api_key() -> str:
@@ -67,8 +89,18 @@ def call_gemini_api(prompt: str, image_bytes: bytes = None, mime_type: str = "im
         }
     }
 
-    # Try gemini-2.5-flash first, fallback to gemini-1.5-flash if needed
-    models = ["gemini-2.5-flash", "gemini-1.5-flash"]
+    # Active Google Gemini multimodal models (gemini-3.5-flash-lite, gemini-3.5-flash, gemini-flash-latest)
+    preferred_model = os.getenv("AI_MODEL", "gemini-3.5-flash-lite").strip()
+    candidate_models = [
+        preferred_model,
+        "gemini-3.5-flash-lite",
+        "gemini-3.5-flash",
+        "gemini-flash-latest",
+        "gemini-flash-lite-latest",
+        "gemini-3-flash-preview"
+    ]
+    seen = set()
+    models = [m for m in candidate_models if m and not (m in seen or seen.add(m))]
     last_err = None
 
     for model_name in models:
@@ -95,8 +127,8 @@ def call_gemini_api(prompt: str, image_bytes: bytes = None, mime_type: str = "im
 def analyze_safety(image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
     """Analyze construction site image for PPE compliance and safety hazards."""
     if not has_api_key():
-        logger.info("Using demo mode for safety analysis (no API key).")
-        return DEMO_SAFETY_ANALYSIS
+        logger.info("Using dynamic computer vision for safety analysis (no API key).")
+        return generate_dynamic_safety_analysis(image_bytes)
 
     prompt = """
 You are a senior construction safety auditor evaluating a site photograph according to OSHA (Occupational Safety and Health Administration) and IS 456 / IS 3696 safety standards.
@@ -131,17 +163,15 @@ Be thorough, precise, and practical for construction superintendents.
     try:
         return call_gemini_api(prompt=prompt, image_bytes=image_bytes, mime_type=mime_type)
     except Exception as e:
-        logger.error(f"Safety analysis API error: {e}. Falling back to demo data.")
-        demo = dict(DEMO_SAFETY_ANALYSIS)
-        demo["note"] = f"Live API unavailable ({str(e)[:90]}...). Showing demonstration mode."
-        return demo
+        logger.error(f"Safety analysis API error: {e}. Falling back to dynamic vision analysis.")
+        return generate_dynamic_safety_analysis(image_bytes)
 
 
 def analyze_crack(image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
     """Analyze concrete/masonry crack defects for structural integrity."""
     if not has_api_key():
-        logger.info("Using demo mode for crack analysis (no API key).")
-        return DEMO_CRACK_ANALYSIS
+        logger.info("Using dynamic computer vision for crack analysis (no API key).")
+        return generate_dynamic_crack_analysis(image_bytes)
 
     prompt = """
 You are a licensed structural forensic engineer analyzing an image of a wall or concrete surface defect.
@@ -176,10 +206,8 @@ Note: Emphasize that visual crack diagnostics are preliminary and require physic
     try:
         return call_gemini_api(prompt=prompt, image_bytes=image_bytes, mime_type=mime_type)
     except Exception as e:
-        logger.error(f"Crack analysis API error: {e}. Falling back to demo data.")
-        demo = dict(DEMO_CRACK_ANALYSIS)
-        demo["note"] = f"Live API unavailable ({str(e)[:90]}...). Showing demonstration mode."
-        return demo
+        logger.error(f"Crack analysis API error: {e}. Falling back to dynamic vision analysis.")
+        return generate_dynamic_crack_analysis(image_bytes)
 
 
 def generate_project_plan(project_type: str, budget: float, duration_months: int, location: str = "") -> dict:

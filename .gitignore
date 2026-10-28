@@ -12,6 +12,9 @@ venv/
 backend/.env
 !.env.example
 !backend/.env.example
+.streamlit/secrets.toml
+.streamlit/secrets*.toml
+!.streamlit/secrets.toml.example
 
 # Build outputs
 dist/
