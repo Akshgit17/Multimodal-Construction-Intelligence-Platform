@@ -7,7 +7,6 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19.0-61DAFB.svg)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC.svg)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An enterprise-grade, multimodal decision-support system designed to assist construction project managers, site superintendents, QA/QC engineers, and safety auditors across site safety auditing, structural crack diagnostics, project financial estimation, and real-time site weather advisory.
 
@@ -267,8 +266,3 @@ Multimodal-Construction-Intelligence-Platform/
 - **Generative AI:** Google Gemini Multimodal Flash REST API (`gemini-3.5-flash-lite`, `gemini-3.5-flash`, `gemini-flash-latest`)
 - **Architectural 3D Engine:** Pollinations AI Generative Vision API
 - **Codes & Standards:** OSHA 1926, IS 456:2000, IS 3696, NBC 2016, ACI 224R / 305R
-
----
-
-## 📄 License
-This project is developed as part of the **Skill Wallet Capstone Project** and is licensed under the MIT License.
